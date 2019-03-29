@@ -1,9 +1,11 @@
 import numpy as np
+import random
 import re
 from nltk.util import ngrams
 import itertools
 import pandas as pd
-
+from sklearn import svm
+from joblib import dump, load
 
 #np.set_printoptions(threshold=np.inf)
 alphanum = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','0','1','2','3','4','5','6','7','8','9']
@@ -14,7 +16,8 @@ for perm in permutations:
     featuresDict[(''.join(perm))] = counter
     counter = counter + 1
 #print(counter)
-dataset = pd.read_csv("malicious-url-detector_dataset.csv").head(100)
+dataset = pd.read_csv("malicious-url-detector_dataset.csv").head(10000)
+#dataset = dataset.loc[0:250000].sample(30000, random_state=1)
 #print(dataset)
 X = np.zeros([dataset.shape[0], 46656],dtype="int")
 Y = np.zeros(dataset.shape[0],dtype="int")
@@ -51,4 +54,8 @@ def generate_ngram(sentence):
 
 
 preprocess_sentences(dataset)
-print(X[0])
+#print(Y)
+clf = svm.SVC(gamma='scale',probability=True)
+clf.fit(X,Y)
+dump(clf, 'svm_model.joblib') 
+
