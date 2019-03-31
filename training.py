@@ -55,7 +55,7 @@ def generate_ngram(sentence):
 
 preprocess_sentences(dataset)
 #print(Y)
-clf = svm.SVC(gamma='scale',probability=True)
+clf = svm.SVC(gamma='scale')
 clf.fit(X,Y)
 dump(clf, 'svm_model.joblib') 
 

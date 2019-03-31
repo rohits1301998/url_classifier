@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>URL Classifier</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+ <div>
+  <div class="wraper">
+    <div class="typewriter">
+      <h1>URL Classifier </h1>
+    </div>
+  </div>
+  <form action="/classifier/" method="POST">
+    {% csrf_token %}
+
+    <div style="width:100%;height:300px;">
+      <div class="container">
+        <input type="text" placeholder="Search..." name="url">
+        <div class="search"></div>   
+      </div>
+      </div>
+  </form>
+  
+  <div class="wraper">
+      <div class="typewriter">
+        {% if status  %}
+        <p> URL is <span style="color:crimson">{{ status }}</span> </p>
+        {% endif %}
+      </div>
+    </div>
+</div> 
+
+<script>
+
+  function handleKeyPress(event){
+    console.log(event)
+  }
+
+</script>
+</body>
+</html>
